@@ -1,7 +1,24 @@
+import React, { useState } from 'react';
 import type { NextPage } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import { defaultProps } from '../config';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({api_url}: any) => {
+  let [words, setWords] = useState<[string, number][]>([]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    let target = event.currentTarget as HTMLFormElement;
+    let letters = target.letters.value;
+    if (!letters) return;
+
+    let url = `${api_url}/words/${letters}`;
+    let res = await fetch(url)
+    setWords(res.ok ? await res.json() : []);
+  }
+
   return (
     <div className="flex flex-col min-h-screen py-2">
       <Head>
@@ -42,11 +59,22 @@ const Home: NextPage = () => {
       </header>
 
       <main className="mb-auto pl-10 text-left">
-        <ul className="tracking-widest">
-          <li><a href="https://cadizm.com/scramble/">Scramble</a></li>
-          <li><a href="/words">Words</a></li>
-          <li><a href="/wordle">Wordle</a></li>
-        </ul>
+        <div>
+          <form onSubmit={handleSubmit} className="space-x-1">
+            <input type="text" name="letters" className="border border-gray-400 rounded-md  text-left pl-2" />
+            <button type="submit" className="border border-blue-400 rounded-md pl-2 pr-2">Submit</button>
+          </form>
+        </div>
+        <div className="pt-2">
+          <ul className="pl-4">
+            {
+              words.map(([score, word]) =>
+                <li key={word} className="py-1 list-item list-disc">
+                  {score} {word}
+                </li>
+              )}
+          </ul>
+        </div>
       </main>
 
       <footer className="flex h-10 w-full items-center justify-end border-t pr-8 pt-2">
@@ -70,3 +98,9 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  return {
+    props: defaultProps(),
+  };
+}

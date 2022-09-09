@@ -42,11 +42,6 @@ const Home: NextPage = () => {
       </header>
 
       <main className="mb-auto pl-10 text-left">
-        <ul className="tracking-widest">
-          <li><a href="https://cadizm.com/scramble/">Scramble</a></li>
-          <li><a href="/words">Words</a></li>
-          <li><a href="/wordle">Wordle</a></li>
-        </ul>
       </main>
 
       <footer className="flex h-10 w-full items-center justify-end border-t pr-8 pt-2">
