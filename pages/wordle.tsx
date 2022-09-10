@@ -125,7 +125,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
             {
               candidates.map(([word, score]) =>
                 <li key={word} className="py-1 list-item list-disc">
-                  {score} {word}
+                  {word}
                 </li>
               )}
           </ul>
