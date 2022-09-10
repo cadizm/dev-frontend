@@ -16,7 +16,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
     setWordle(items => {
       return [
         ...items.slice(0, index),
-        target.value,
+        target.value.toLowerCase(),
         ...items.slice(index + 1),
       ];
     });
@@ -27,7 +27,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
 
   const handleExcludedChange = async (event: React.FormEvent) => {
     let target = event.currentTarget as HTMLFormElement;
-    setExcluded(target.value);
+    setExcluded(target.value.toLowerCase());
   }
 
   const handleMisplacedChange = async (event: React.FormEvent) => {
@@ -36,7 +36,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
     setMisplaced(items => {
       return [
         ...items.slice(0, index),
-        target.value,
+        target.value.toLowerCase(),
         ...items.slice(index + 1),
       ];
     });
