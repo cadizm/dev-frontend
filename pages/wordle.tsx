@@ -12,7 +12,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
 
   const handleWordleChange = async (event: React.FormEvent) => {
     let target = event.currentTarget as HTMLFormElement;
-    const index = parseInt(target.name);
+    const index = parseInt(target.name.split('-', 2)[1]);
     setWordle(items => {
       return [
         ...items.slice(0, index),
@@ -20,6 +20,9 @@ const Wordle: NextPage = ({ api_url }: any) => {
         ...items.slice(index + 1),
       ];
     });
+    if (!target.value.length)
+      return;
+    focusInput('wordle', index + 1);
   }
 
   const handleExcludedChange = async (event: React.FormEvent) => {
@@ -29,7 +32,7 @@ const Wordle: NextPage = ({ api_url }: any) => {
 
   const handleMisplacedChange = async (event: React.FormEvent) => {
     let target = event.currentTarget as HTMLFormElement;
-    const index = parseInt(target.name);
+    const index = parseInt(target.name.split('-', 2)[1]);
     setMisplaced(items => {
       return [
         ...items.slice(0, index),
@@ -37,6 +40,9 @@ const Wordle: NextPage = ({ api_url }: any) => {
         ...items.slice(index + 1),
       ];
     });
+    if (!target.value.length)
+      return;
+    focusInput('misplaced', index + 1);
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -55,6 +61,17 @@ const Wordle: NextPage = ({ api_url }: any) => {
     setCandidates(res.ok ? await res.json() : []);
   }
 
+  const focusInput = (prefix: string, index: number) => {
+    const nextInput = document.querySelector(
+      `input[name=${prefix}-${index}]`
+    ) as HTMLElement;
+
+    // If found, focus the next field
+    if (nextInput !== null) {
+      nextInput.focus();
+    }
+  }
+
   return (
     <div>
       <Head>
@@ -62,17 +79,17 @@ const Wordle: NextPage = ({ api_url }: any) => {
       </Head>
 
       <div>
-        <form onSubmit={handleSubmit} className="space-x-1">
+        <form onSubmit={handleSubmit}>
           <div className="flex py-2">
             <div className="w-28">
               Wordle
             </div>
             <div className="grid grid-cols-5 w-max">
-              <div className="pr-1"><input type="text" name="0" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="1" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="2" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="3" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="4" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="pr-1"><input type="text" name="wordle-0" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="wordle-1" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="wordle-2" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="wordle-3" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="wordle-4" onChange={handleWordleChange} maxLength={1} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
             </div>
           </div>
 
@@ -90,11 +107,11 @@ const Wordle: NextPage = ({ api_url }: any) => {
               Misplaced
             </div>
             <div className="grid grid-cols-5 w-max">
-              <div className="pr-1"><input type="text" name="0" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="1" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="2" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="3" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
-              <div className="px-1"><input type="text" name="4" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="pr-1"><input type="text" name="misplaced-0" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="misplaced-1" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="misplaced-2" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="misplaced-3" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
+              <div className="px-1"><input type="text" name="misplaced-4" onChange={handleMisplacedChange} maxLength={5} className="border border-gray-400 rounded-md text-center w-7 h-7" /></div>
             </div>
           </div>
 
