@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    # https://docs.ansible.com/ansible/2.3/synchronize_module.html#examples
+    - synchronize:
+        src: ./../out/
+        dest: /usr/share/nginx/html
+        delete: yes
+        recursive: yes
