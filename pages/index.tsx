@@ -9,7 +9,9 @@ const Home: NextPage = () => {
       </Head>
 
       <ul className="tracking-widest">
-        <li><a href="https://cadizm.com/scramble/">Scramble</a></li>
+        {/* /scramble route is not used by this next app,
+            but proxied by nginx to a containerized app */}
+        <li><a href="/scramble">Scramble</a></li>
         <li><a href="/words">Words</a></li>
         <li><a href="/wordle">Wordle</a></li>
       </ul>
