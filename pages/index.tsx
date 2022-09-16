@@ -14,6 +14,7 @@ const Home: NextPage = () => {
         <li><a href="/scramble">Scramble</a></li>
         <li><a href="/words">Words</a></li>
         <li><a href="/wordle">Wordle</a></li>
+        <li><a href="/spelling-bee">Spelling Bee</a></li>
       </ul>
     </div>
   )
