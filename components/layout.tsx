@@ -1,5 +1,6 @@
 import React from "react";
 import Head from 'next/head'
+import GoogleAnalytics from "./google-analytics";
 
 const Header = () => {
   return (
@@ -66,6 +67,7 @@ const Layout = ({ children, title = "cadizm" }: any) => {
         <Head>
           <title>{title}</title>
           <link rel="icon" href="/favicon.ico" />
+          <GoogleAnalytics />
         </Head>
         <main className="mb-auto pl-10 text-left">
           {children}
